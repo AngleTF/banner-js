@@ -14,7 +14,7 @@ function ajax(uData) {
     oXml.open(uData.method.toLowerCase(), uData.url, true);
 
     oXml.addEventListener('readystatechange', function () {
-        if (oXml.readyState === 4 && oXml.status === 200) {
+        if (oXml.readyState === 4 && oXml.status <= 200 && oXml.status > 300) {
             var_dump('----------请求成功--------');
             switch (uData.type.toLowerCase()) {
                 case 'xml':
@@ -24,7 +24,7 @@ function ajax(uData) {
                     uData.success(JSON.parse(oXml.responseText));
                     break;
             }
-        } else if (oXml.status > 400) {
+        } else if (oXml.status >= 300 && oXml.readyState === 4) {
             //如果失败返回对象本身
             uData.failure(oXml);
         }
