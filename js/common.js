@@ -7,15 +7,19 @@ function GetDom(dom, all) {
 
 function ajax(uData) {
     if (!uData) {
-        return false;
+        return;
     }
 
     var oXml = new XMLHttpRequest();
+
+    uData.url += uData.method.toLowerCase() === 'get' ? '?' + requestString(uData.data) : '';
+
     oXml.open(uData.method.toLowerCase(), uData.url, true);
 
     oXml.addEventListener('readystatechange', function () {
-        if (oXml.readyState === 4 && oXml.status <= 200 && oXml.status > 300) {
+        if (oXml.readyState === 4 && oXml.status >= 200 && oXml.status < 300) {
             var_dump('----------请求成功--------');
+            uData.type = uData.type ? uData.type : "source";
             switch (uData.type.toLowerCase()) {
                 case 'xml':
                     uData.success(oXml.responseXML);
@@ -23,15 +27,21 @@ function ajax(uData) {
                 case 'json':
                     uData.success(JSON.parse(oXml.responseText));
                     break;
+                default:
+                    uData.success(oXml.responseText);
             }
         } else if (oXml.status >= 300 && oXml.readyState === 4) {
             //如果失败返回对象本身
             uData.failure(oXml);
         }
-
     });
     oXml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    oXml.send(requestString(uData.data));
+
+    if(uData.method.toLowerCase() === 'get'){
+        oXml.send();
+    }else{
+        oXml.send(requestString(uData.data));
+    }
 
 }
 function requestString(data) {
