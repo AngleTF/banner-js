@@ -67,7 +67,7 @@ function touchBanner(data) {
                     width:wid + 'px'
                 },
                 className: 'fl',
-                innerHTML:'<a href="' +(data.link[index] ? data.link[index] : 'javascript:void(0)')  + '" style="background:url(\''+ current +'\') no-repeat;background-size: cover"></a>'
+                innerHTML:`<a href="` + (data.link[index] ? data.link[index] : 'javascript:void(0)')  + `" style="background:url('${current}') no-repeat;background-size: cover"></a>`
             }
         ]).toEnd(newEle[0]).newElement;
 
@@ -247,7 +247,72 @@ function touchBanner(data) {
         }
 
 
+    };
+
+    function GetDom(dom, all) {
+        return all !== true ? document.querySelector(dom) : document.querySelectorAll(dom);
     }
 
+    function DOM(){
 
+        //调用时用来区分的元素名称
+        this.ElementName = 'tag';
+
+        //创建出来的新元素列表
+        this.newElement = [];
+
+        //单例toEnd对象
+        this.toEndElement = {};
+
+        //创建元素
+        this.create = function (ElementArray){
+            //清空创建的新元素
+            this.newElement = [];
+
+            ElementArray.forEach(function(current){
+                var dom = document.createElement(current.tag);
+                for (var key in current){
+                    if(current.hasOwnProperty(key) && key !== this.ElementName && key !== 'style'){
+                        dom[key] = current[key];
+                    }
+                    if(key === 'style'){
+                        var style = current['style'];
+                        for (var sKey in style){
+                            if(style.hasOwnProperty(sKey)){
+                                dom.style[sKey] = style[sKey]
+                            }
+                        }
+                    }
+
+                }
+                this.newElement.push(dom);
+            },this);
+
+            return this;
+        };
+
+        this.toEnd = function(toEle){
+            if(typeof toEle === 'string'){
+                if (this.toEndElement[toEle]){
+                    //返回旧对象
+                    toEle = this.toEndElement[toEle];
+                }else{
+                    //生成新对象
+                    this.toEndElement[toEle] = GetDom(toEle,true);
+                    toEle = this.toEndElement[toEle];
+                }
+            }
+
+            this.newElement.forEach(function(current){
+                if(toEle.length === undefined){
+                    toEle.appendChild(current);
+                }else{
+                    //数组对象
+                    toEle[0].appendChild(current);
+                }
+            });
+
+            return this;
+        };
+    }
 }
