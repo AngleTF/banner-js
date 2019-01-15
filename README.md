@@ -2,7 +2,7 @@
 移动端的(无缝/响应式/滑动)轮播
 
 ### 效果
-![](https://raw.githubusercontent.com/AngleTF/web-banner-js/master/image/1.jpg)
+![](https://raw.githubusercontent.com/AngleTF/web-banner-js/master/image/demo.png)
 
 ### 使用
 声明视口
