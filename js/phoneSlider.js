@@ -48,6 +48,8 @@
 
         this.mergeConfig(config);
         this.slider = createObject(this.config.target);
+        if (!this.slider) return;
+
         this.sliderCount = this.config.list.length;
         this.sliderWidth = this.slider.offsetWidth;
         this.sliderHalfWidth = this.sliderWidth / 2;
@@ -298,10 +300,22 @@
 
 
     function createObject(name) {
+
+        if (!name) return null;
+
         if (typeof name === 'string') {
             return document.querySelector(name);
         }
-        return name;
+
+        if (typeof name !== 'object') {
+            return null;
+        }
+
+        if(name.nodeType === 1 && name instanceof w.HTMLElement){
+            return name;
+        }
+
+        return name[0] ? name[0] : null;
     }
 
 
