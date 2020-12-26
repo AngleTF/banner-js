@@ -10,18 +10,22 @@
 npm install
 npm run dev
 ```
-___ 
+
+### npm安装
+```
+npm install lif-phone-slider -D
+```
+ 
 ### ES6 或 CommonJs使用
 ```js
-import './css/phone-slider.scss';
 import i1 from './images/banner-1.jpg';
 import i2 from './images/banner-2.jpg';
 import i3 from './images/banner-3.jpg';
 //ES6
-//import PhoneSlider from './lib/PhoneSlider';
+import PhoneSlider from 'lif-phone-slider';
 
 //CommonJs
-const PhoneSlider = require('./lib/PhoneSlider');
+//const PhoneSlider = require('lif-phone-slider');
 
 new PhoneSlider(
     {
