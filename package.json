@@ -1,8 +1,8 @@
 {
-  "name": "banner",
-  "version": "1.0.0",
+  "name": "tlf-phone-slider",
+  "version": "1.0.1",
   "description": "移动端的(无缝/响应式/滑动)轮播",
-  "main": "example.html",
+  "main": "dist/PhoneSlider.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
