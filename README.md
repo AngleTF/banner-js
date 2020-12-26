@@ -7,6 +7,7 @@
 
 ### demo
 ```
+git clone git@github.com:AngleTF/banner-js.git
 npm install
 npm run dev
 ```
