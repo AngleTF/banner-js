@@ -6,3 +6,4 @@ postcss.config.js
 dist/images
 dist/main.js
 .idea
+.eslintrc.js

@@ -5,12 +5,12 @@ const main = path.resolve(src, 'index.js');
 const indexHtml = path.resolve(src, 'index.html');
 const phoneSlider = path.resolve(src, 'lib/PhoneSlider.js');
 
-const htmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const webpack = require('webpack');
 
 const config = {
     mode: 'production',
@@ -23,27 +23,30 @@ const config = {
         path: dist,
         filename: '[name].js',
         library: 'PhoneSlider',
-        libraryTarget: 'umd',
+        libraryTarget: 'umd'
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
                 use: [
-                    {loader: 'babel-loader'}
+                    { loader: 'babel-loader' },
+                    { loader: 'eslint-loader' }
                 ]
             },
             {
-                test: /\.scss$/, use: [
+                test: /\.scss$/,
+                use: [
                     MiniCssExtractPlugin.loader,
-                    //'style-loader',
+                    // 'style-loader',
                     'css-loader',
                     'sass-loader',
                     'postcss-loader'
                 ]
             },
             {
-                test: /\.(png|jpg|jpeg)$/i, use: [
+                test: /\.(png|jpg|jpeg)$/i,
+                use: [
                     {
                         loader: 'file-loader',
                         options: {
@@ -52,7 +55,7 @@ const config = {
                         }
                     }
                 ]
-            },
+            }
         ]
     },
     plugins: [
@@ -60,9 +63,9 @@ const config = {
             cleanAfterEveryBuildPatterns: ['dist']
         }),
         new MiniCssExtractPlugin({
-            filename: "./css/phone-slider.min.css",
+            filename: './css/phone-slider.min.css'
         }),
-        new htmlWebpackPlugin({
+        new HtmlWebpackPlugin({
             filename: 'example.html',
             template: indexHtml,
             chunks: 'all',
@@ -76,8 +79,8 @@ const config = {
     optimization: {
         usedExports: true,
         minimizer: [
-            new CssMinimizerPlugin(),
-        ],
+            new CssMinimizerPlugin()
+        ]
     }
 };
 
@@ -87,8 +90,8 @@ module.exports = (env) => {
         config.devServer = {
             contentBase: dist,
             open: true,
-            openPage: 'example.html',
-        }
+            openPage: 'example.html'
+        };
     }
     return config;
-}
+};
