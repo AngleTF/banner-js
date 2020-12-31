@@ -15,9 +15,23 @@ new PhoneSlider(
         moveTime: 0.5, // 移动时间 单位s
         runTime: 3, // 总耗时   单位s
         list: [
-            { img: i1 },
-            { img: i2, href: 'https://baidu.com' },
-            { img: i3, href: 'https://baidu.com' }
+            {
+                img: i1,
+                click: function () {
+                    // console.log(11111);
+                }
+            },
+            {
+                img: i2,
+                // href: 'https://baidu.com',
+                click: function () {
+                    // console.log('handle click');
+                }
+            },
+            {
+                img: i3
+                // href: 'https://baidu.com'
+            }
         ],
         btnClick: true // 是否开启点击小圆点进行切换
     }

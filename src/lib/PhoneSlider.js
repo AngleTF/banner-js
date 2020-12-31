@@ -81,11 +81,12 @@ PhoneSlider.prototype.renderSlider = function () {
     this.config.list.forEach(function (current, index) {
         // 图片列表
         const img = document.createElement('li');
-        const { img: url, href = 'javascript:void(0)' } = current;
+        const { img: url, href = null, click = () => {} } = current;
 
         img.className = 'fl';
         img.style.width = this.sliderWidth + 'px';
-        img.innerHTML = `<a href="${href}" style="background:url('${url}') no-repeat;background-size: cover"></a>`;
+        img.innerHTML = href ? `<a href="${href}" style="background:url('${url}') no-repeat;background-size: cover"></a>` : `<a style="background:url('${url}') no-repeat;background-size: cover"></a>`;
+        img.onclick = click;
         imageGroup.appendChild(img);
 
         imgList[imgList.length] = img;
@@ -209,6 +210,7 @@ PhoneSlider.prototype.onTouchEvent = function () {
 
     this.imageGroup.addEventListener('touchstart', function (e) {
         // 清除定时器 , transition
+        self.touchData.moveWid = 0;
         clearInterval(self.slider.timer);
         this.style.transition = '';
         const touch = e.touches[0];
@@ -233,7 +235,6 @@ PhoneSlider.prototype.onTouchEvent = function () {
             } else {
                 self.currentIndex++;
             }
-
             self.move();
 
             self.currentIndex = self.currentIndex > self.sliderCount ? 1 : self.currentIndex;
