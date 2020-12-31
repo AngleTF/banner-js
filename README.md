@@ -36,7 +36,12 @@ new PhoneSlider(
         moveTime: .5,               //移动时间 单位s
         runTime: 3,                 //总耗时   单位s
         list: [
-            {img: i1,},
+            {
+                img: i1, 
+                click: function () {
+                    console.log('handle click');
+                }
+            },
             {img: i2, href: 'https://baidu.com'},
             {img: i3, href: 'https://baidu.com'},
         ],
